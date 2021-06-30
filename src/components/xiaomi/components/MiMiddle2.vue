@@ -186,11 +186,57 @@
 
         <div class="video-box">
           <div class="video-box-item">
+            <a href="#">
+              <div class="btn-box">
+                <img src="../images/v1.jpg"
+                     alt="">
+                <div class="btn">
+                  <i class="iconfont">&#xe620;</i>
+                </div>
+              </div>
+              <p>小米5G新品手机发布会</p>
+            </a>
 
           </div>
-          <div class="video-box-item"></div>
-          <div class="video-box-item"></div>
-          <div class="video-box-item"></div>
+          <div class="video-box-item">
+            <a href="#">
+              <div class="btn-box">
+                <img src="../images/v3.jpg"
+                     alt="">
+                <div class="btn">
+                  <i class="iconfont">&#xe620;</i>
+                </div>
+              </div>
+              <p>小米5G新品手机发布会</p>
+            </a>
+
+          </div>
+          <div class="video-box-item">
+            <a href="#">
+              <div class="btn-box">
+                <img src="../images/v3.jpg"
+                     alt="">
+                <div class="btn">
+                  <i class="iconfont">&#xe620;</i>
+                </div>
+              </div>
+              <p>小米5G新品手机发布会</p>
+            </a>
+
+          </div>
+          <div class="video-box-item">
+            <a href="#">
+              <div class="btn-box">
+                <img src="../images/v4.jpg"
+                     alt="">
+                <div class="btn">
+                  <i class="iconfont">&#xe620;</i>
+                </div>
+              </div>
+              <p>小米5G新品手机发布会</p>
+            </a>
+
+          </div>
         </div>
       </div>
       <!-- 视频 结束 -->
@@ -868,7 +914,60 @@ export default {
         .video-box-item {
           width: 296px;
           height: 285px;
-          background-color: black;
+          margin-bottom: 14px;
+          background-color: #fff;
+          transition: all 0.2s linear;
+
+          > a {
+            .btn-box {
+              position: relative;
+              width: 100%;
+              height: 180px;
+
+              > img {
+                width: 100%;
+                height: 100%;
+              }
+
+              .btn {
+                position: absolute;
+                left: 20px;
+                bottom: 10px;
+                width: 36px;
+                height: 24px;
+                text-align: center;
+                border: 2px solid #fff;
+                border-radius: 10px;
+                transition: all 0.3s linear;
+
+                > i {
+                  position: relative;
+                  top: 2px;
+                  left: 2px;
+                  color: #fff;
+                  font-size: 14px;
+                }
+              }
+            }
+
+            .btn-box:hover {
+              .btn {
+                background-color: #ff6700;
+                border-color: #ff6700;
+              }
+            }
+
+            > p {
+              margin-top: 28px;
+              font-size: 14px;
+              text-align: center;
+              color: #333;
+            }
+          }
+        }
+        .video-box-item:hover {
+          box-shadow: 0 15px 30px rgba($color: #000000, $alpha: 0.1);
+          transform: translateY(-2px);
         }
       }
     }
