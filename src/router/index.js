@@ -21,6 +21,11 @@ const routes = [
     name: 'XunLei',
     component: () => import('@/components/xunlei/XunLei.vue')
   },
+  {
+    path: '/toutiao',
+    name: 'toutiao',
+    component: () => import('@/components/jinritoutiao/TouTiao.vue')
+  },
 ]
 
 const router = createRouter({
