@@ -1,5 +1,5 @@
 <template>
-  <!-- 
+  <!-- 登录步骤
   1. 给登录按钮注册点击事件
   2. 获取表单数据
   3. 请求登录
@@ -11,17 +11,23 @@
 
     <div class="login-head"></div>
 
+    <!--  配置 Form 表单验证 
+        1. 给 el-form 绑定model 为表单数据对象 :model="user"
+        2. 给 el-form-item 绑定prop属性  prop="mobile"  prop="code"
+        3. 给 el-form 配置验证规则 :rules="loginRules"
+     -->
     <!-- 登录表单 -->
     <el-form class="login-form"
-             :model="user">
+             :model="user"
+             :rules="loginRules">
       <!-- 1. 手机号 -->
-      <el-form-item>
+      <el-form-item prop="mobile">
         <el-input placeholder="请输入手机号"
                   v-model="user.mobile"></el-input>
       </el-form-item>
 
       <!-- 2. 验证码 -->
-      <el-form-item>
+      <el-form-item prop="code">
         <el-input placeholder="请输入验证码"
                   v-model="user.code"></el-input>
       </el-form-item>
@@ -35,6 +41,7 @@
       <el-form-item>
         <el-button class="login-bth"
                    type="primary"
+                   :loading="loginLoading"
                    @click="onLogin">登录</el-button>
       </el-form-item>
     </el-form>
@@ -43,6 +50,7 @@
 
 <script>
 import request from './utils/request.js'
+import { ElMessage } from 'element-plus'
 
 export default {
   name: 'Login',
@@ -57,32 +65,54 @@ export default {
       },
       // 是否同意协议
       checked: false,
+      // 登录按钮是否加载
+      loginLoading: false,
+      // 表单验证规则配置
+      loginRules: {
+        mobile: [
+          { required: true, message: '请输入活动名称', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' },
+        ],
+      },
     }
   },
 
   methods: {
     onLogin() {
-      // 1. 获取表单数据
+      /* 1. 获取表单数据 */
       const user = this.user
 
-      // 2. 表单验证
+      /* 2. 表单验证 */
 
-      // 3. 验证通过, 提交登录
+      /* 3. 验证通过, 提交登录 */
+      this.loginLoading = true // 登录按钮显示加载
       request({
         method: 'POST',
         url: '/mp/v1_0/authorizations',
         data: user, // 请求体, 提交表单数据
       })
         .then((res) => {
-          // 3.1 登录成功
+          /*  3.1 登录成功 */
           console.log(res)
+          // 提示成功
+          ElMessage.success({
+            message: '登录成功',
+            type: 'success',
+            duration: 1000,
+          })
+          // 登录按钮取消加载
+          this.loginLoading = false
         })
         .catch((err) => {
-          // 3.2 登录失败
-          console.log('登录失败', err)
+          /* 3.2 登录失败 */
+          console.log(err)
+          // 失败提示
+          ElMessage.error('登录失败')
+          // 登录按钮取消加载
+          this.loginLoading = false
         })
 
-      // 4. 处理后端响应结果
+      /* 4. 处理后端响应结果 */
     },
   },
 }
