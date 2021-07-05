@@ -11,13 +11,18 @@
 
     <div class="login-head"></div>
 
-    <!--  配置 Form 表单验证 
+    <!-- A. 配置 Form 表单验证 
         1. 给 el-form 绑定model 为表单数据对象 :model="user"
         2. 给 el-form-item 绑定prop属性  prop="mobile"  prop="code"
         3. 给 el-form 配置验证规则 :rules="loginRules"
+
+        B. 手动触发 表单验证
+        1. 给 el-form 设置 ref="loginForm"
+        2. 通过 ref 获取 el-form, 调用$refs["loginForm"].validate方法进行验证
      -->
     <!-- 登录表单 -->
     <el-form class="login-form"
+             ref="loginForm"
              :model="user"
              :rules="loginRules">
       <!-- 1. 手机号 -->
@@ -33,8 +38,8 @@
       </el-form-item>
 
       <!-- 3. 同意协议 -->
-      <el-form-item>
-        <el-checkbox v-model="checked">我已阅读并同意用户协议和隐私条款</el-checkbox>
+      <el-form-item prop="agree">
+        <el-checkbox v-model="user.agree">我已阅读并同意用户协议和隐私条款</el-checkbox>
       </el-form-item>
 
       <!-- 4. 登录按钮 -->
@@ -62,16 +67,45 @@ export default {
 
         // 验证码
         code: '246810',
+
+        // 是否同意协议
+        agree: false,
       },
-      // 是否同意协议
-      checked: false,
       // 登录按钮是否加载
       loginLoading: false,
-      // 表单验证规则配置
+      // 表单验证规则配置, trigger的值: change 或 blur
       loginRules: {
         mobile: [
-          { required: true, message: '请输入活动名称', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' },
+          { required: true, message: '手机号不能为空', trigger: 'change' },
+          // 使用正则验证
+          {
+            pattern: /^1[3456789]\d{9}$/,
+            message: '手机号码格式不正确',
+            trigger: 'change',
+          },
+        ],
+        code: [
+          { required: true, message: '验证码不能为空', trigger: 'change' },
+          // 使用正则验证
+          {
+            pattern: /^\d{6}$/,
+            message: '验证码格式不正确',
+            trigger: 'change',
+          },
+        ],
+        agree: [
+          {
+            // 自动义校验
+            // 通过: callback(); 未通过: callback(new Error('xxx'))
+            validator: (rule, value, callback) => {
+              if (value) {
+                callback()
+              } else {
+                callback(new Error('用户协议未勾选')) // 错误消息写这里
+              }
+            },
+            trigger: 'change',
+          },
         ],
       },
     }
@@ -80,20 +114,30 @@ export default {
   methods: {
     onLogin() {
       /* 1. 获取表单数据 */
-      const user = this.user
+      // const user = this.user
 
       /* 2. 表单验证 */
+      // valid: true 通过, false 不通过
+      this.$refs['loginForm'].validate((valid) => {
+        if (!valid) return // 表单验证失败, 停止提交
 
+        // 3. 验证通过, 请求登录
+        this.login()
+      })
+
+      /* 4. 处理后端响应结果 */
+    },
+
+    login() {
       /* 3. 验证通过, 提交登录 */
       this.loginLoading = true // 登录按钮显示加载
       request({
         method: 'POST',
         url: '/mp/v1_0/authorizations',
-        data: user, // 请求体, 提交表单数据
+        data: this.user, // 请求体, 提交表单数据
       })
         .then((res) => {
           /*  3.1 登录成功 */
-          console.log(res)
           // 提示成功
           ElMessage.success({
             message: '登录成功',
@@ -111,8 +155,6 @@ export default {
           // 登录按钮取消加载
           this.loginLoading = false
         })
-
-      /* 4. 处理后端响应结果 */
     },
   },
 }

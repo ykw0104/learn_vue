@@ -45,6 +45,12 @@ const routes = [
       },
     ]
   },
+
+  {
+    path: '/ele-plus',
+    name: 'Ele',
+    component: () => import('@/components/test_element_ui/Ele.vue')
+  },
 ]
 
 const router = createRouter({

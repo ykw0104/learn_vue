@@ -6,6 +6,8 @@
                  to="/xunlei">迅雷</router-link>
     <router-link class="rl-cls"
                  to="/toutiao">头条</router-link>
+    <router-link class="rl-cls"
+                 to="/ele-plus">element-plus</router-link>
   </div>
 </template>
 
