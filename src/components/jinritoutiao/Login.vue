@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import request from './utils/request.js'
+import { userLogin } from './utils/user.js'
 import { ElMessage } from 'element-plus'
 
 export default {
@@ -131,11 +131,7 @@ export default {
     login() {
       /* 3. 验证通过, 提交登录 */
       this.loginLoading = true // 登录按钮显示加载
-      request({
-        method: 'POST',
-        url: '/mp/v1_0/authorizations',
-        data: this.user, // 请求体, 提交表单数据
-      })
+      userLogin(this.user) // 调用user.js的userLogin方法
         .then((res) => {
           /*  3.1 登录成功 */
           // 提示成功
