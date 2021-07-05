@@ -35,17 +35,65 @@ const routes = [
     component: () => import('@/components/jinritoutiao/TouTiao.vue'),
     children: [
       {
-        path: '/toutiao',
-        redirect: '/toutiao/login'
+        path: '',
+        redirect: '/toutiao/tt_login'
       },
       {
-        path: 'login',
-        name: 'Login',
-        component: () => import('@/components/jinritoutiao/Login.vue')
+        path: 'tt_login', // 登录页
+        name: 'TouiaoLogin',
+        component: () => import('@/components/jinritoutiao/TouTiaoLogin.vue')
+      },
+      {
+        path: 'tt_bg', // 首页
+        name: 'TouTiaoBg',
+        component: () => import('@/components/jinritoutiao/TouTiaoBg.vue'),
+
+        children: [
+          {
+            path: '',
+            redirect: 'tt_bg/bg_home'
+          },
+          {
+            path: 'bg_home',
+            name: 'TouTiaoBgHome',
+            component: () => import('@/components/jinritoutiao/TouTiaoBgHome.vue')
+          },
+          {
+            path: 'bg_article',
+            name: 'TouTiaoBgArticle',
+            component: () => import('@/components/jinritoutiao/TouTiaoBgArticle.vue')
+          },
+          {
+            path: 'bg_image',
+            name: 'TouTiaoBgImage',
+            component: () => import('@/components/jinritoutiao/TouTiaoBgImage.vue')
+          },
+          {
+            path: 'bg_publish',
+            name: 'TouTiaoBgPublish',
+            component: () => import('@/components/jinritoutiao/TouTiaoBgPublish.vue')
+          },
+          {
+            path: 'bg_comment',
+            name: 'TouTiaoBgComment',
+            component: () => import('@/components/jinritoutiao/TouTiaoBgComment.vue')
+          },
+          {
+            path: 'bg_fans',
+            name: 'TouTiaoBgFans',
+            component: () => import('@/components/jinritoutiao/TouTiaoBgFans.vue')
+          },
+          {
+            path: 'bg_setting',
+            name: 'TouTiaoBgASetting',
+            component: () => import('@/components/jinritoutiao/TouTiaoBgSetting.vue')
+          },
+        ]
       },
     ]
   },
 
+  /* 饿了么 Element-PLUS */
   {
     path: '/ele-plus',
     name: 'Ele',

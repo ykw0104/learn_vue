@@ -58,7 +58,7 @@ import { userLogin } from './utils/user.js'
 import { ElMessage } from 'element-plus'
 
 export default {
-  name: 'Login',
+  name: 'TaoTiaoLogin',
   data() {
     return {
       user: {
@@ -140,8 +140,12 @@ export default {
             type: 'success',
             duration: 1000,
           })
+
           // 登录按钮取消加载
           this.loginLoading = false
+
+          // 跳转到首页
+          this.$router.push('/toutiao/tt_bg')
         })
         .catch((err) => {
           /* 3.2 登录失败 */
