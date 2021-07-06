@@ -30,7 +30,7 @@
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item>设置</el-dropdown-item>
-              <el-dropdown-item>退出</el-dropdown-item>
+              <el-dropdown-item @click="onLogout">退出</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -73,6 +73,28 @@ export default {
         this.user = res.data.data
       })
     },
+
+    /* 用户退出 */
+    onLogout() {
+      //element-plus的弹框
+      this.$confirm('确认退出吗?', '退出提示', {
+        cancelButtonText: '取消',
+        confirmButtonText: '确定',
+
+        type: 'warning',
+      })
+        .then(() => {
+          // 退出操作
+          window.localStorage.removeItem('user')
+          this.$router.push('/toutiao/tt_login')
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消退出',
+          })
+        })
+    },
   },
 }
 </script>
@@ -85,9 +107,6 @@ export default {
   left: 0;
 
   .bg-aside {
-    // overflow: hidden; // Note
-    min-height: 400px;
-
     .bg-aside-menu {
       height: 100%;
     }
