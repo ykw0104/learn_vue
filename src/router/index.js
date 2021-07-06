@@ -51,7 +51,7 @@ const routes = [
         children: [
           {
             path: '',
-            redirect: 'tt_bg/bg_home'
+            redirect: '/toutiao/tt_bg/bg_home'
           },
           {
             path: 'bg_home',
@@ -104,6 +104,24 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+/* 导航守卫 to: 要去哪, from: 从哪来, next: 放行 */
+router.beforeEach((to, from, next) => {
+
+  /* 头条的导航设置 */
+  if (to.path.includes('/toutiao/') && to.path !== '/toutiao/tt_login') { // 头条的非登录页面 
+    const user = JSON.parse(window.localStorage.getItem('user')) // 获取头条的登录用户
+    if (user) { // 已登录,放行
+      next()
+    } else { // 未登录, 跳转到头条登录页面
+      next('/toutiao/tt_login')
+    }
+  }
+  /* 其他导航 */
+  else {
+    next() // 允许通过
+  }
 })
 
 export default router
