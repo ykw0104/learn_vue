@@ -1,9 +1,11 @@
 <template>
   <!-- router属性: index值为路由的path,可以进行跳转 -->
-  <el-menu default-active="/toutiao/tt_bg/bg_home"
+  <el-menu class="bg-nav-menu"
+           default-active="/toutiao/tt_bg/bg_home"
            background-color="#002033"
            text-color="#fff"
            active-text-color="#ffd04b"
+           :collapse="isCollapse"
            router>
 
     <el-menu-item index="/toutiao/tt_bg/bg_home">
@@ -41,6 +43,7 @@
 export default {
   name: 'TouTiaoBgAside',
   methods: {},
+  props: ['is-collapse'],
 }
 </script>
 <style lang="scss" scoped>

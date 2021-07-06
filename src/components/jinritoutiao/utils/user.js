@@ -13,7 +13,13 @@ export const userLogin = user => {
 }
 
 /* 获取用户信息 */
-export const getUserInfo = () => { }
+export const getUserProfile = () => {
+
+  return request({
+    method: 'GET',
+    url: '/mp/v1_0/user/profile',
+  })
+}
 
 /* 修改用户信息 */
 export const updateUser = () => { }

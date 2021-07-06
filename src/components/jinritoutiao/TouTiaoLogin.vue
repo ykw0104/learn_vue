@@ -61,6 +61,7 @@ export default {
   name: 'TaoTiaoLogin',
   data() {
     return {
+      /* 表单数据对象 */
       user: {
         // 手机号
         mobile: '13911111111',
@@ -71,8 +72,10 @@ export default {
         // 是否同意协议
         agree: false,
       },
+
       // 登录按钮是否加载
       loginLoading: false,
+
       // 表单验证规则配置, trigger的值: change 或 blur
       loginRules: {
         mobile: [
@@ -134,26 +137,24 @@ export default {
       userLogin(this.user) // 调用user.js的userLogin方法
         .then((res) => {
           /*  3.1 登录成功 */
-          // 提示成功
           ElMessage.success({
-            message: '登录成功',
+            message: '登录成功', // 提示成功
             type: 'success',
             duration: 1000,
           })
 
-          // 登录按钮取消加载
-          this.loginLoading = false
+          this.loginLoading = false // 登录按钮取消加载
 
-          // 跳转到首页
-          this.$router.push('/toutiao/tt_bg')
+          window.localStorage.setItem('user', JSON.stringify(res.data.data)) // 保存user到localStorage
+
+          this.$router.push('/toutiao/tt_bg') // 跳转到首页
         })
         .catch((err) => {
           /* 3.2 登录失败 */
           console.log(err)
-          // 失败提示
-          ElMessage.error('登录失败')
-          // 登录按钮取消加载
-          this.loginLoading = false
+
+          ElMessage.error('登录失败') // 失败提示
+          this.loginLoading = false // 登录按钮取消加载
         })
     },
   },
