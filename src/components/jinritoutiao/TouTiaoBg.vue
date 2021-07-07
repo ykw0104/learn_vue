@@ -15,7 +15,7 @@
         <div class="bg-header-left">
           <i :class="{'el-icon-s-fold':isCollapse,'el-icon-s-unfold':!isCollapse}"
              @click="isCollapse = !isCollapse"></i>
-          <span>掌中舞罢箫声绝, 三十六宫秋夜长</span>
+          <span>惟有知情一片月，曾窥飞鸟入昭阳</span>
         </div>
 
         <el-dropdown>
