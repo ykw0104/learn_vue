@@ -16,23 +16,26 @@
                size="mini">
 
         <el-form-item label="状态">
-          <el-radio-group v-model="contentForm.status">
-            <el-radio label="全部"></el-radio>
-            <el-radio label="草稿"></el-radio>
-            <el-radio label="待审核"></el-radio>
-            <el-radio label="审核通过"></el-radio>
-            <el-radio label="审核失败"></el-radio>
-            <el-radio label="已删除"></el-radio>
+          <el-radio-group v-model="status">
+            <el-radio :label="null">全部</el-radio>
+            <el-radio label="0">草稿</el-radio>
+            <el-radio label="1">待审核</el-radio>
+            <el-radio label="2">审核通过</el-radio>
+            <el-radio label="3">审核失败</el-radio>
+            <el-radio label="4">已删除</el-radio>
           </el-radio-group>
         </el-form-item>
 
         <el-form-item label="频道">
-          <el-select placeholder="请选择频道"
-                     v-model="contentForm.channel">
-            <el-option label="区域一"
-                       value="shanghai"></el-option>
-            <el-option label="区域二"
-                       value="beijing"></el-option>
+          <el-select v-model="channelId"
+                     placeholder="请选择频道">
+            <el-option label="全部"
+                       :value="null"></el-option>
+            <el-option v-for="channel in channels"
+                       :label="channel.name"
+                       :value="channel.id"
+                       :key="channel.id"></el-option>
+
           </el-select>
         </el-form-item>
 
@@ -46,7 +49,8 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary">查询</el-button>
+          <el-button type="primary"
+                     @click="loadArticles(1)">查询</el-button>
         </el-form-item>
       </el-form>
       <!-- 1.2 筛选查询的表单 结束-->
@@ -54,7 +58,7 @@
 
     <el-card class="box-card2">
       <template #header>
-        根据筛选条件共查到 xxxx 条数据
+        根据筛选条件共查到 {{totalCount}} 条数据
       </template>
       <!-- 2.1 内容显示 开始 -->
       <el-table class="list-table"
@@ -113,10 +117,11 @@
 
       <!-- 2.2 分页 开始-->
       <el-pagination class="content-pagination"
-                     :total="1000"
+                     :total="totalCount"
+                     :page-size="pageSize"
+                     @current-change="onCurrentChange"
                      layout="prev, pager, next"
-                     background>
-      </el-pagination>
+                     background />
       <!-- 2.2 分页 结束-->
     </el-card>
 
@@ -124,7 +129,7 @@
 </template>
 
 <script>
-import { getArticles } from './utils/article.js'
+import { getArticles, getArticleChannels } from './utils/article.js'
 
 export default {
   name: 'TouTiaoBgArticle',
@@ -139,22 +144,48 @@ export default {
 
       defaultTime1: [new Date(2000, 1, 1, 12, 0, 0)],
 
+      /* 分页相关 */
       articles: [], // 文章数据列表
+      totalCount: 0, //总页数
+      pageSize: 20, // 每页显示多少
+      status: null, // 状态: 全部, 草稿, 待审核, 审核通过, 审核失败, 已删除
+      channels: {}, // 频道
+      channelId: null, //频道Id
     }
   },
   created() {
-    this.loadArticles()
+    this.loadChannels()
+    this.loadArticles(1)
   },
   methods: {
-    /* 请求文章 */
-    loadArticles() {
+    /* 数据请求相关 开始*/
+    // 1. 获取某页的文章数据
+    loadArticles(page = 1) {
       getArticles({
-        page: 1,
-        per_page: 30,
+        page, // 当前页
+        per_page: this.pageSize, // 每页显示多少
+        status: this.status, // 状态: 全部, 草稿, 待审核, 审核通过, 审核失败, 已删除
+        channel_id: this.channelId, // 频道Id
       }).then((res) => {
-        this.articles = res.data.data.results
+        const { results, total_count } = res.data.data
+        this.articles = results
+        this.totalCount = total_count
       })
     },
+
+    // 2. 获取频道
+    loadChannels() {
+      getArticleChannels().then((res) => {
+        this.channels = res.data.data.channels
+      })
+    },
+    /* 数据请求相关 结束*/
+
+    /* 分页相关事件 开始*/
+    onCurrentChange(page) {
+      this.loadArticles(page) // page:当前页
+    },
+    /* 分页相关事件 结束 */
 
     /* 设置表格背景 */
     getRowStyle({ row, rowIndex }) {
