@@ -15,7 +15,7 @@
         <div class="bg-header-left">
           <i :class="{'el-icon-s-fold':isCollapse,'el-icon-s-unfold':!isCollapse}"
              @click="isCollapse = !isCollapse"></i>
-          <span>惟有知情一片月，曾窥飞鸟入昭阳</span>
+          <span class="bg-header-left-title">惟有知情一片月，曾窥飞鸟入昭阳</span>
         </div>
 
         <el-dropdown>
@@ -99,6 +99,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@font-face {
+  font-family: 'hanyi';
+  src: url('./css/汉仪贤二体.ttf');
+}
+
 .bg-container {
   position: fixed;
   top: 0;
@@ -122,11 +127,14 @@ export default {
 
       .bg-header-left {
         > i {
-          position: relative;
-          top: 2px;
           margin-right: 5px;
           font-size: 20px;
           cursor: pointer;
+        }
+
+        .bg-header-left-title {
+          font-size: 22px;
+          font-family: 'hanyi';
         }
       }
 
