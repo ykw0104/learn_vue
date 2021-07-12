@@ -1,74 +1,45 @@
-<template>
-  <div class="box">
-    <el-table :data="tableData"
-              style="width: 100%"
-              class="el-t"
-              :header-cell-style="hrs"
-              :row-style="rs">
-      <el-table-column prop="date"
-                       label="日期"
-                       width="180"
-                       class="xxxx">
-      </el-table-column>
-      <el-table-column prop="name"
-                       label="姓名"
-                       width="180">
-      </el-table-column>
-      <el-table-column prop="address"
-                       label="地址">
-      </el-table-column>
-    </el-table>
 
-    <div class="box-inner">333</div>
-  </div>
+<template>
+  <el-button type="text"
+             @click="clickMe">点我</el-button>
+
+  <el-dialog title="提示"
+             v-model="dialogVisible"
+             width="30%">
+    <span>这是一段信息</span>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="cancle">取 消</el-button>
+        <el-button type="primary"
+                   @click="confirm">确 定</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script>
 export default {
-  name: 'Ele',
   data() {
     return {
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄',
-        },
-      ],
+      dialogVisible: false,
     }
   },
   methods: {
-    rs({ row, rowIndex }) {
-      return `background-color:rgba(255, 255, 255, 0.8);`
+    clickMe() {
+      this.dialogVisible = true
     },
-    hrs({ row, rowIndex }) {
-      return `background-color:rgba(255, 255, 255, 0.1)`
+
+    cancle() {
+      console.log('取消')
+      this.dialogVisible = false
+    },
+    confirm() {
+      console.log('确认')
+      this.dialogVisible = false
     },
   },
 }
 </script>
-<style lang="scss" scoped>
-.box {
-  height: 1000px;
-  background-color: red;
 
-  .box-inner {
-    width: 200px;
-    height: 200px;
-    background-color: rgba(255, 255, 255, 0.8);
-  }
-}
-
-.el-t {
-  background-color: transparent;
-}
-
-.el-table th {
-  background-color: transparent;
-}
+<style>
 </style>

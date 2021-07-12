@@ -11,7 +11,7 @@
         <!-- 1.1 面包屑路径 结束-->
       </template>
       <!-- 1.2 筛选查询的表单 开始-->
-      <el-form :model="contentForm"
+      <el-form v-loading="loading"
                label-width="40px"
                size="mini">
 
@@ -30,7 +30,7 @@
           <el-select v-model="channelId"
                      placeholder="请选择频道">
             <el-option label="全部"
-                       :value="null"></el-option>
+                       value="all"></el-option>
             <el-option v-for="channel in channels"
                        :label="channel.name"
                        :value="channel.id"
@@ -40,16 +40,20 @@
         </el-form-item>
 
         <el-form-item label="日期">
-          <el-date-picker v-model="contentForm.date1"
+          <el-date-picker v-model="rangeDate"
                           type="datetimerange"
                           start-placeholder="开始日期"
-                          end-placeholder="结束日期"
-                          :default-time="defaultTime1">
+                          end-placeholder="截止日期"
+                          format="YYYY-MM-DD"
+                          value-format="YYYY-MM-DD"
+                          :default-time="defaultTime1"
+                          size="mini">
           </el-date-picker>
         </el-form-item>
 
         <el-form-item>
           <el-button type="primary"
+                     :disabled="loading"
                      @click="loadArticles(1)">查询</el-button>
         </el-form-item>
       </el-form>
@@ -65,19 +69,30 @@
                 :data="articles"
                 :row-style="getRowStyle"
                 :header-cell-style="getHeaderCellStyle"
+                v-loading="loading"
                 style="width: 100%"
                 size="mini">
         <el-table-column prop="cover"
                          label="封面">
           <template #default="scope">
-            <img v-if="scope.row.cover.images[0]"
+            <el-image :src="scope.row.cover.images[0]"
+                      style="width: 60px; height: 60px;"
+                      fit="cover"
+                      lazy>
+              <template #placeholder>
+                <div class="image-slot">
+                  加载中<span class="dot">...</span>
+                </div>
+              </template>
+            </el-image>
+            <!-- <img v-if="scope.row.cover.images[0]"
                  class="article-cover"
                  :src="scope.row.cover.images[0]"
                  alt="">
             <img v-else
                  class="article-cover"
                  src="./images/no_pic.webp"
-                 alt="">
+                 alt=""> -->
           </template>
         </el-table-column>
         <el-table-column prop="title"
@@ -109,7 +124,9 @@
             <el-button size="mini"
                        type="danger"
                        circle
-                       icon="el-icon-delete" />
+                       icon="el-icon-delete"
+                       @click="onDeleteArticle(scope.row.id)" />
+
           </template>
         </el-table-column>
       </el-table>
@@ -120,6 +137,7 @@
                      :total="totalCount"
                      :page-size="pageSize"
                      @current-change="onCurrentChange"
+                     :disabled="loading"
                      layout="prev, pager, next"
                      background />
       <!-- 2.2 分页 结束-->
@@ -129,19 +147,16 @@
 </template>
 
 <script>
-import { getArticles, getArticleChannels } from './utils/article.js'
+import {
+  getArticles,
+  getArticleChannels,
+  deleteArticle,
+} from './utils/article.js'
 
 export default {
   name: 'TouTiaoBgArticle',
   data() {
     return {
-      // 表单数据
-      contentForm: {
-        status: '',
-        channel: '',
-        date1: '',
-      },
-
       defaultTime1: [new Date(2000, 1, 1, 12, 0, 0)],
 
       /* 分页相关 */
@@ -151,6 +166,9 @@ export default {
       status: null, // 状态: 全部, 草稿, 待审核, 审核通过, 审核失败, 已删除
       channels: {}, // 频道
       channelId: null, //频道Id
+      rangeDate: [], // [开始日期, 截止日期]
+
+      loading: true, // 表格显示加载
     }
   },
   created() {
@@ -159,17 +177,23 @@ export default {
   },
   methods: {
     /* 数据请求相关 开始*/
-    // 1. 获取某页的文章数据
+    // 1. 获取某页的文章数据 -- 分页请求
     loadArticles(page = 1) {
+      this.loading = true // 开启加载显示
+
       getArticles({
         page, // 当前页
         per_page: this.pageSize, // 每页显示多少
         status: this.status, // 状态: 全部, 草稿, 待审核, 审核通过, 审核失败, 已删除
-        channel_id: this.channelId, // 频道Id
+        channel_id: this.channelId === 'all' ? null : this.channelId, // 频道Id
+        begin_pubdate: this.rangeDate ? this.rangeDate[0] : null, // 开始日期
+        end_pubdate: this.rangeDate ? this.rangeDate[1] : null, // 截止日期
       }).then((res) => {
         const { results, total_count } = res.data.data
-        this.articles = results
-        this.totalCount = total_count
+        this.articles = results // 文章数据
+        this.totalCount = total_count // 文章总条数
+
+        this.loading = false // 关闭加载
       })
     },
 
@@ -178,6 +202,30 @@ export default {
       getArticleChannels().then((res) => {
         this.channels = res.data.data.channels
       })
+    },
+
+    // 3. 删除文章
+    onDeleteArticle(articleId) {
+      this.$confirm('确认删除?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+        .then(() => {
+          deleteArticle(articleId)
+            .then((res) => {
+              console.log(res)
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除',
+          })
+        })
     },
     /* 数据请求相关 结束*/
 
