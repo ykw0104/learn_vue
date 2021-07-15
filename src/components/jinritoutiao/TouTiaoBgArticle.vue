@@ -117,10 +117,13 @@
         </el-table-column>
         <el-table-column label="操作">
           <template #default="scope">
+            <!-- 编辑按钮,跳转到发布页面 -->
             <el-button size="mini"
                        type="primary"
                        circle
-                       icon="el-icon-edit" />
+                       icon="el-icon-edit"
+                       @click="$router.push('/toutiao/tt_bg/bg_publish?id='+scope.row.id)" />
+            <!-- 删除按钮 -->
             <el-button size="mini"
                        type="danger"
                        circle
@@ -136,10 +139,11 @@
       <el-pagination class="content-pagination"
                      :total="totalCount"
                      :page-size="pageSize"
-                     @current-change="onCurrentChange"
+                     :current-page.sync="page"
                      :disabled="loading"
                      layout="prev, pager, next"
-                     background />
+                     background
+                     @current-change="onCurrentChange" />
       <!-- 2.2 分页 结束-->
     </el-card>
 
@@ -162,6 +166,7 @@ export default {
       /* 分页相关 */
       articles: [], // 文章数据列表
       totalCount: 0, //总页数
+      page: 1, // 当前页
       pageSize: 20, // 每页显示多少
       status: null, // 状态: 全部, 草稿, 待审核, 审核通过, 审核失败, 已删除
       channels: {}, // 频道
@@ -212,13 +217,10 @@ export default {
         type: 'warning',
       })
         .then(() => {
-          deleteArticle(articleId)
-            .then((res) => {
-              console.log(res)
-            })
-            .catch((err) => {
-              console.log(err)
-            })
+          // 删除操作
+          deleteArticle(articleId.toString()).then((res) => {
+            this.loadArticles(this.page) // 删除文章后重新更新文章列表
+          })
         })
         .catch(() => {
           this.$message({

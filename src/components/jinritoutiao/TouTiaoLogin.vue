@@ -70,7 +70,7 @@ export default {
         code: '246810',
 
         // 是否同意协议
-        agree: false,
+        agree: true,
       },
 
       // 登录按钮是否加载
