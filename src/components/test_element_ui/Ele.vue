@@ -1,44 +1,21 @@
 
 <template>
-  <el-button type="text"
-             @click="clickMe">点我</el-button>
-
-  <el-dialog title="提示"
-             v-model="dialogVisible"
-             width="30%">
-    <span>这是一段信息</span>
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="cancle">取 消</el-button>
-        <el-button type="primary"
-                   @click="confirm">确 定</el-button>
-      </span>
+  <el-upload class="upload-demo"
+             drag
+             action="https://jsonplaceholder.typicode.com/posts/"
+             multiple>
+    <i class="el-icon-upload"></i>
+    <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+    <template #tip>
+      <div class="el-upload__tip">
+        只能上传 jpg/png 文件，且不超过 500kb
+      </div>
     </template>
-  </el-dialog>
+  </el-upload>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      dialogVisible: false,
-    }
-  },
-  methods: {
-    clickMe() {
-      this.dialogVisible = true
-    },
-
-    cancle() {
-      console.log('取消')
-      this.dialogVisible = false
-    },
-    confirm() {
-      console.log('确认')
-      this.dialogVisible = false
-    },
-  },
-}
+export default {}
 </script>
 
 <style>
