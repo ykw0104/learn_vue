@@ -99,6 +99,61 @@ const routes = [
     name: 'Ele',
     component: () => import('@/components/test_element_ui/Ele.vue')
   },
+
+
+  {
+    path: '/haoke01',
+    name: 'GoodCustomer',
+    component: () => import('@/components/01_好客如一/GoodCustomer.vue'),
+    children: [
+      {
+        path: '',
+        redirect: '/haoke01/hk01_login'
+      },
+      {
+        path: 'hk01_login',
+        name: 'GoodCustomerLogin',
+        component: () => import('@/components/01_好客如一/GoodCustomerLogin.vue')
+      },
+      {
+        path: 'hk01_home',
+        name: 'GoodCustomerHome',
+        component: () => import('@/components/01_好客如一/GoodCustomerHome.vue'),
+
+        children: [
+          {
+            path: '',
+            redirect: '/haoke01/hk01_home/hk01_order'
+          },
+          {
+            path: 'hk01_product',
+            name: 'GoodCustomerProduct',
+            component: () => import('@/components/01_好客如一/GoodCustomerProduct.vue')
+          },
+          {
+            path: 'hk01_order',
+            name: 'GoodCustomerHomeOrder',
+            component: () => import('@/components/01_好客如一/GoodCustomerHomeOrder.vue')
+          },
+          {
+            path: 'hk01_seat',
+            name: 'GoodCustomerHomeSeat',
+            component: () => import('@/components/01_好客如一/GoodCustomerHomeSeat.vue')
+          },
+          {
+            path: 'hk01_background',
+            name: 'GoodCustomerHomeBackground',
+            component: () => import('@/components/01_好客如一/GoodCustomerHomeBackground.vue')
+          },
+          {
+            path: 'hk01_logout',
+            name: 'GoodCustomerHomeLogout',
+            component: () => import('@/components/01_好客如一/GoodCustomerHomeLogout.vue')
+          },
+        ]
+      },
+    ]
+  },
 ]
 
 const router = createRouter({

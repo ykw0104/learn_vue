@@ -7,9 +7,11 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "animate.css": "^4.1.1",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "element-plus": "^1.0.2-beta.53",
+    "gsap": "^3.7.1",
     "json-bigint": "^1.0.0",
     "moment": "^2.29.1",
     "swiper": "^6.7.1",

@@ -1,6 +1,11 @@
 import { createApp } from 'vue'
+
+/* 引入Element-PLUS */
 import ElementPlus from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css'
+
+/* 引入animate.css */
+import "animate.css"
 
 import App from './App.vue'
 import router from './router'

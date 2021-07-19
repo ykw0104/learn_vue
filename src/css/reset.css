@@ -85,3 +85,7 @@ input,
 button {
   outline: none;
 }
+
+table {
+  border-collapse: collapse;
+}

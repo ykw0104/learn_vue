@@ -8,6 +8,8 @@
                  to="/toutiao">头条</router-link>
     <router-link class="rl-cls"
                  to="/ele-plus">element-plus</router-link>
+    <router-link class="rl-cls"
+                 to="/haoke01">01_好客如一</router-link>
   </div>
 </template>
 
