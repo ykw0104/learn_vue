@@ -5,23 +5,23 @@
         <div class="nav-bar-product">
           <!-- 菜单 -->
           <ul class="nav-wrap-product">
-            <li class="active">
+            <li :class="{active:proIndex === 0}" @click="proClick(0)">
               <span class="iconfont">&#xe6ad;</span>
               <span class="content">推荐</span>
             </li>
-            <li>
+            <li :class="{active:proIndex === 1}" @click="proClick(1)">
               <span class="iconfont">&#xebdc;</span>
               <span class="content">热菜</span>
             </li>
-            <li>
+            <li :class="{active:proIndex === 2}" @click="proClick(2)">
               <span class="iconfont">&#xe613;</span>
               <span class="content">凉菜</span>
             </li>
-            <li>
+            <li :class="{active:proIndex === 3}" @click="proClick(3)">
               <span class="iconfont">&#xe69e;</span>
               <span class="content">主食</span>
             </li>
-            <li>
+            <li :class="{active:proIndex === 4}" @click="proClick(4)">
               <span class="iconfont">&#xe60d;</span>
               <span class="content">甜品</span>
             </li>
@@ -40,12 +40,12 @@
         <ul class="foodlist">
           <li v-for="pro in productList">
             <img :src="pro.imgUrl" alt="">
-            <span class="iconfont recommend">&#xe716;</span>
+            <span class="iconfont recommend" v-if="pro.isCommend">&#xe716;</span>
             <div class="bar">
-              <h3>慕斯蛋糕</h3>
+              <h3>{{pro.name}}</h3>
               <p>
                 <span class="rmb">RMB</span>
-                <span class="price">120/份</span>
+                <span class="price">{{pro.price}}/份</span>
                 <span class="iconfont add">&#xe68a;</span>
               </p>
             </div>
@@ -70,13 +70,34 @@ export default {
 
   data() {
     return {
-      productList: [], // 菜品详情
+      proIndex: 0,
+      productList: [], // 某类型菜单
+      allProductList: [], //  所有菜单
     }
   },
 
   created() {
     /* 模拟获取菜品详情 */
-    this.productList = getProductList()
+    this.allProductList = getProductList()
+
+    /* 初始化默认显示推荐菜 */
+    this.productList = this.getProductList(this.proIndex)
+  },
+
+  methods: {
+    proClick(index) {
+      this.proIndex = index
+      this.productList = this.getProductList(index)
+    },
+
+    getProductList(index) {
+      // 推荐
+      if (index === 0) {
+        return this.allProductList.filter((pro) => pro.isCommend)
+      } else {
+        return this.allProductList.filter((pro) => pro.type === index)
+      }
+    },
   },
 }
 </script>

@@ -9,6 +9,46 @@ export function getProductList() {
   return [
     // 1.热菜   2.凉菜   3.主食  4.甜品
     {
+      id: 1001,
+      type: 1,
+      name: '惠山烤鸡',
+      imgUrl: require('../images/product/food1_1.jpg'),
+      price: 89,
+      isCommend: false
+    },
+    {
+      id: 1002,
+      type: 1,
+      name: '铁板虾',
+      imgUrl: require('../images/product/food1_2.jpg'),
+      price: 119,
+      isCommend: true
+    },
+    {
+      id: 2001,
+      type: 2,
+      name: '西施豆腐',
+      imgUrl: require('../images/product/food2_1.jpg'),
+      price: 29,
+      isCommend: false
+    },
+    {
+      id: 3001,
+      type: 3,
+      name: '肉夹馍',
+      imgUrl: require('../images/product/food3_1.jpg'),
+      price: 39,
+      isCommend: false
+    },
+    {
+      id: 3002,
+      type: 3,
+      name: '红烧牛肉面',
+      imgUrl: require('../images/product/food3_2.jpg'),
+      price: 120,
+      isCommend: true
+    },
+    {
       id: 4001,
       type: 4,
       name: '慕斯蛋糕',

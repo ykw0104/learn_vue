@@ -18,16 +18,16 @@ export default {
 .home-slot {
   height: 100vh;
 
-  display: flex;
-  flex-direction: column;
-
   .home-slot-top {
     height: 80px;
   }
 
   .home-slot-content {
-    flex: 1;
-    margin: 0 30px 20px 30px;
+    position: fixed;
+    left: 250px;
+    top: 80px;
+    bottom: 20px;
+    right: 20px;
     padding: 15px;
     background-color: rgba($color: #ffffff, $alpha: 0.4);
   }
