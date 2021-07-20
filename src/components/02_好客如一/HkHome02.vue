@@ -9,9 +9,9 @@
       <div class="message">
         <p>欢迎您: D-Man</p>
         <!-- 模拟动态显示桌数 -->
-        <p>空闲桌位: {{$store.state.hk_orderStatus.num1}}桌</p>
-        <p>正在点餐: {{$store.state.hk_orderStatus.num2}}桌</p>
-        <p>正在用餐: {{$store.state.hk_orderStatus.num3}}桌</p>
+        <p>空闲桌位: {{seatCondition[0]}}桌</p>
+        <p>正在点餐: {{seatCondition[1]}}桌</p>
+        <p>正在用餐: {{seatCondition[2]}}桌</p>
         <!-- <p>未选桌子</p> -->
       </div>
 
@@ -53,12 +53,24 @@ export default {
       actionIndex: -1, // 四个图标的索引
 
       seatList: [], // 座位详情
+      seatCondition: [0, 0, 0], //座位使用情况
     }
   },
 
   created() {
     /* 模拟获取到桌位信息情况 */
     this.seatList = getseatList(13)
+
+    this.seatCondition = [0, 0, 0] // 清除之前记录
+    this.seatList.forEach((seat) => {
+      if (seat.statue === 1) {
+        this.seatCondition[0] = ++this.seatCondition[0]
+      } else if (seat.statue === 2) {
+        this.seatCondition[1] = ++this.seatCondition[1]
+      } else if (seat.statue === 3) {
+        this.seatCondition[2] = ++this.seatCondition[2]
+      }
+    })
   },
 
   methods: {
