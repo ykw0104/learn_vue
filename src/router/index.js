@@ -101,6 +101,7 @@ const routes = [
   },
 
 
+  /* 好客如一 01 */
   {
     path: '/haoke01',
     name: 'GoodCustomer',
@@ -123,7 +124,7 @@ const routes = [
         children: [
           {
             path: '',
-            redirect: '/haoke01/hk01_home/hk01_order'
+            redirect: '/haoke01/hk01_home/hk01_product'
           },
           {
             path: 'hk01_product',
@@ -151,6 +152,29 @@ const routes = [
             component: () => import('@/components/01_好客如一/GoodCustomerHomeLogout.vue')
           },
         ]
+      },
+    ]
+  },
+
+  /* 好客如一 02 */
+  {
+    path: '/haoke02',
+    name: 'HkIndex02',
+    component: () => import('@/components/02_好客如一/HkIndex02.vue'),
+    children: [
+      {
+        path: '',
+        redirect: '/haoke02/hk02_login'
+      },
+      {
+        path: 'hk02_login',
+        name: 'HkLogin02',
+        component: () => import('@/components/02_好客如一/HkLogin02.vue')
+      },
+      {
+        path: 'hk02_home',
+        name: 'HkHome02',
+        component: () => import('@/components/02_好客如一/HkHome02.vue')
       },
     ]
   },

@@ -8,47 +8,37 @@
         <p>
           <span class="rmb">RMB</span>
           <span class="price">120/份</span>
-          <span class="iconfont">&#xe68a;</span>
+          <span class="iconfont add">&#xe68a;</span>
         </p>
       </div>
     </li>
 
     <li>
-      <img src="./images/food1.jpeg" alt="">
+      <img src="./images/food2.jpg" alt="">
       <span class="iconfont recommend">&#xe716;</span>
       <div class="bar">
-        <h3>慕斯蛋糕</h3>
+        <h3>酱汁牛仔骨</h3>
         <p>
           <span class="rmb">RMB</span>
-          <span class="price">120/份</span>
+          <span class="price">89/份</span>
           <span class="iconfont add">&#xe68a;</span>
         </p>
       </div>
     </li>
+
     <li>
-      <img src="./images/food1.jpeg" alt="">
-      <span class="iconfont recommend">&#xe716;</span>
+      <img src="./images/food3.jpg" alt="">
+      <!-- <span class="iconfont recommend">&#xe716;</span> -->
       <div class="bar">
-        <h3>慕斯蛋糕</h3>
+        <h3>刺身拼盘</h3>
         <p>
           <span class="rmb">RMB</span>
-          <span class="price">120/份</span>
-          <span class="iconfont">&#xe68a;</span>
+          <span class="price">329/份</span>
+          <span class="iconfont add">&#xe68a;</span>
         </p>
       </div>
     </li>
-    <li>
-      <img src="./images/food1.jpeg" alt="">
-      <span class="iconfont recommend">&#xe716;</span>
-      <div class="bar">
-        <h3>慕斯蛋糕</h3>
-        <p>
-          <span class="rmb">RMB</span>
-          <span class="price">120/份</span>
-          <span class="iconfont">&#xe68a;</span>
-        </p>
-      </div>
-    </li>
+
   </ul>
 </template>
 
@@ -75,7 +65,7 @@ ul.foodlist {
     .recommend {
       position: absolute;
       left: 0;
-      top: 0;
+      top: -2px;
       font-size: 40px;
       color: red;
     }

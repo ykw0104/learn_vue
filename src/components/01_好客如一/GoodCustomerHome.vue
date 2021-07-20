@@ -2,16 +2,17 @@
   <div class="home-wrap">
     <!-- 1. 左侧 -->
     <div class="sub-bar">
-      <a href="#">
+      <a class="logo-a" href="#" @click="$router.push('/haoke01/hk01_home/hk01_product')">
         <img class="logo" src="./images/logo.png" alt="">
       </a>
 
       <div class="message">
         <p>欢迎您: D-Man</p>
-        <p>空闲桌位: 5桌</p>
-        <p>正在点餐: 1桌</p>
-        <p>正在用餐: 5桌</p>
-        <p>未选桌子</p>
+        <!-- 模拟动态显示桌数 -->
+        <p>空闲桌位: {{$store.state.hk_orderStatus.num1}}桌</p>
+        <p>正在点餐: {{$store.state.hk_orderStatus.num2}}桌</p>
+        <p>正在用餐: {{$store.state.hk_orderStatus.num3}}桌</p>
+        <!-- <p>未选桌子</p> -->
       </div>
 
       <ul class="action">
@@ -35,9 +36,9 @@
     </div>
 
     <!-- 2. 顶部导航 -->
-    <div class="nav-bar">
+    <div class="nav-bar-product" v-if=" $route.path === '/haoke01/hk01_home/hk01_product' ">
       <!-- 菜单 -->
-      <ul class="nav-wrap">
+      <ul class="nav-wrap-product">
         <li class="active">
           <span class="iconfont">&#xe6ad;</span>
           <span class="content">推荐</span>
@@ -68,6 +69,9 @@
         </button>
       </div>
     </div>
+    <div class="nav-bar-order" v-else-if=" $route.path === '/haoke01/hk01_home/hk01_order' ">
+      1111111
+    </div>
 
     <!-- 3. 右侧内容 -->
     <div class="hk-content">
@@ -77,14 +81,24 @@
 </template>
 
 <script>
+import { rangeRandom } from './util/common.js'
+
 export default {
   name: 'GoodCustomerHome',
   data() {
     return {
-      actionIndex: 0, // ul.action里的四个li,点击某个高亮显示
+      actionIndex: -1, // ul.action里的四个li,点击某个高亮显示
     }
   },
+  created() {
+    /* 关于座位seat的数据模拟 */
+    this.getOrderList()
+    setInterval(() => {
+      this.getOrderList()
+    }, 10000) // 每隔多少秒模拟一次
+  },
   methods: {
+    /* 右侧四个按钮 */
     orderClick() {
       this.actionIndex = 0
       this.$router.push('/haoke01/hk01_home/hk01_order')
@@ -100,6 +114,24 @@ export default {
     logoutClick() {
       this.actionIndex = 3
       this.$router.push('/haoke01/hk01_home/hk01_logout')
+    },
+
+    /* 关于座位seat的数据模拟 */
+    getOrderList() {
+      let orderList = []
+
+      for (let i = 0; i < this.$store.state.hk_orderNum; i++) {
+        let tempOrder = {}
+        tempOrder.id = i + 1
+        tempOrder.orderStatue = rangeRandom(1, 3) // 1,2 3中的随机一个
+        orderList.push(tempOrder)
+      }
+
+      /* 提交到mutations */
+      this.$store.commit({
+        type: 'hk_getOrderList',
+        orderList,
+      })
     },
   },
 }
@@ -123,10 +155,14 @@ export default {
     width: 250px;
     height: 100vh;
 
-    img.logo {
+    > a.logo-a {
       display: block;
-      width: 80%;
-      margin: 0 auto;
+
+      img.logo {
+        display: block;
+        width: 80%;
+        margin: 0 auto;
+      }
     }
 
     .message {
@@ -232,7 +268,7 @@ export default {
   }
 
   /* 2. 顶部导航 */
-  .nav-bar {
+  .nav-bar-product {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -243,7 +279,7 @@ export default {
     height: 80px;
     padding: 0 20px;
 
-    ul.nav-wrap {
+    ul.nav-wrap-product {
       display: flex;
 
       > li {
@@ -293,6 +329,7 @@ export default {
     bottom: 20px;
     top: 80px;
     padding: 10px;
+    overflow: auto;
     background-color: rgba(255, 255, 255, 0.5);
   }
 }

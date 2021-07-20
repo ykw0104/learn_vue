@@ -1,10 +1,12 @@
 <template>
-  <div>order</div>
+  <div>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'GoodCustomerHomeOrder',
+  name: 'HkIndex02',
 }
 </script>
 <style lang="scss" scoped>

@@ -1,15 +1,11 @@
 <template>
   <div>
-    <router-link class="rl-cls"
-                 to="/mi">小米</router-link>
-    <router-link class="rl-cls"
-                 to="/xunlei">迅雷</router-link>
-    <router-link class="rl-cls"
-                 to="/toutiao">头条</router-link>
-    <router-link class="rl-cls"
-                 to="/ele-plus">element-plus</router-link>
-    <router-link class="rl-cls"
-                 to="/haoke01">01_好客如一</router-link>
+    <router-link class="rl-cls" to="/mi">小米</router-link>
+    <router-link class="rl-cls" to="/xunlei">迅雷</router-link>
+    <router-link class="rl-cls" to="/toutiao">头条</router-link>
+    <router-link class="rl-cls" to="/ele-plus">element-plus</router-link>
+    <router-link class="rl-cls" to="/haoke01">01_好客如一</router-link>
+    <router-link class="rl-cls" to="/haoke02">02_好客如一</router-link>
   </div>
 </template>
 
