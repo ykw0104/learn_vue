@@ -174,7 +174,38 @@ const routes = [
       {
         path: 'hk02_home',
         name: 'HkHome02',
-        component: () => import('@/components/02_好客如一/HkHome02.vue')
+        component: () => import('@/components/02_好客如一/HkHome02.vue'),
+        children: [
+          {
+            path: '',
+            redirect: '/haoke02/hk02_home/hk02_product'
+          },
+          {
+            path: 'hk02_product',
+            name: 'HkHomeProduct',
+            component: () => import('@/components/02_好客如一/components/HkHomeProduct.vue')
+          },
+          {
+            path: 'hk02_order',
+            name: 'HkHomeOrder',
+            component: () => import('@/components/02_好客如一/components/HkHomeOrder.vue')
+          },
+          {
+            path: 'hk02_seat',
+            name: 'HkHomeSeat',
+            component: () => import('@/components/02_好客如一/components/HkHomeSeat.vue')
+          },
+          {
+            path: 'hk02_bg',
+            name: 'HkHomeBg',
+            component: () => import('@/components/02_好客如一/components/HkHomeBg.vue')
+          },
+          {
+            path: 'hk02_logout',
+            name: 'HkHomeLogout',
+            component: () => import('@/components/02_好客如一/components/HkHomeLogout.vue')
+          }
+        ]
       },
     ]
   },
