@@ -90,11 +90,13 @@ export default {
       this.productList = this.getProductList(index)
     },
 
+    /* 根据类型获取菜单列表 */
     getProductList(index) {
-      // 推荐
       if (index === 0) {
+        // 推荐
         return this.allProductList.filter((pro) => pro.isCommend)
       } else {
+        // 其他类型(热菜, 凉菜, 主食, 甜品)
         return this.allProductList.filter((pro) => pro.type === index)
       }
     },

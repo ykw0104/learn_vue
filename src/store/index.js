@@ -8,9 +8,9 @@ export default createStore({
     hk_orderStatus: { num1: 0, num2: 0, num3: 0 }, //  状态总计
     /* 好客如一 结束 */
 
-
   },
   mutations: {
+    /* 好客如一 开始 */
     hk_getOrderList(state, payload) {
       state.hk_orderList = payload.orderList // GoodCustomerHome初始化是取得
 
@@ -30,6 +30,7 @@ export default createStore({
         }
       })
     }
+    /* 好客如一 结束 */
   },
   actions: {
   },

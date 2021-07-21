@@ -71,6 +71,12 @@ export default {
         this.seatCondition[2] = ++this.seatCondition[2]
       }
     })
+
+    window.sessionStorage.setItem('seatList', JSON.stringify(this.seatList))
+    window.sessionStorage.setItem(
+      'seatCondition',
+      JSON.stringify(this.seatCondition)
+    )
   },
 
   methods: {
