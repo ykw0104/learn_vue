@@ -1,12 +1,12 @@
 <template>
-  <div>222222</div>
+  <sub-ele20 @increment="getCounter"></sub-ele20>
 </template>
 
-<script>
-export default {
-  name: 'SubEle2',
+<script setup>
+import SubEle20 from './SubEle2_0.vue'
 
-  setup() {},
+const getCounter = (payload) => {
+  console.log(payload)
 }
 </script>
 <style lang="scss" scoped>

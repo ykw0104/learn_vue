@@ -3,8 +3,8 @@
     <div>
       <button @click="tabClick('EleTest')">ele-plus测试</button>
       <button @click="tabClick('SubEle1')">Hook使用集合</button>
-      <button @click="tabClick('SubEle2')">useTitle</button>
-      <button @click="tabClick('SubEle3')">33</button>
+      <button @click="tabClick('SubEle2')">defineEmit</button>
+      <button @click="tabClick('SubEle3')">SubEle3</button>
     </div>
     <hr>
     <component :is="curTab"></component>
